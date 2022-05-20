@@ -14,6 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
+    - name: Debug secrets
+      run: |
+        echo ${{ secrets.AWS_ACCESS_KEY_ID }}
+        echo ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        echo ${{ secrets.AWS_SESSION_TOKEN }}        
     - name: Configure AWS Credentials Action For GitHub Actions
       # You may pin to the exact commit or the version.
       # uses: aws-actions/configure-aws-credentials@05b148adc31e091bafbaf404f745055d4d3bc9d2
