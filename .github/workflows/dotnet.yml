@@ -6,40 +6,31 @@ on:
   pull_request:
     branches: [ main ]
 
+defaults:
+  run:
+    working-directory: ./CCisternasMiPrimeraFuncionLambda
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    env: 
+      working-directory: ./CCisternasMiPrimeraFuncionLambda
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Debug secrets
-      run: |
-        echo ${{ env.AWS_ACCESS_KEY_ID }}
-        echo ${{ env.AWS_SECRET_ACCESS_KEY }}
-        echo ${{ env.AWS_SESSION_TOKEN }}        
-    - name: Configure AWS Credentials Action For GitHub Actions
-      # You may pin to the exact commit or the version.
-      # uses: aws-actions/configure-aws-credentials@05b148adc31e091bafbaf404f745055d4d3bc9d2
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        # AWS Access Key ID. This input is required if running in the GitHub hosted environment. It is optional if running in a self-hosted environment that already has AWS credentials, for example on an EC2 instance.
-        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-        # AWS Secret Access Key. This input is required if running in the GitHub hosted environment. It is optional if running in a self-hosted environment that already has AWS credentials, for example on an EC2 instance.
-        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
-        # AWS Session Token
-        aws-session-token: ${{ env.AWS_SESSION_TOKEN }}
-        # AWS Region, e.g. us-east-2
-        aws-region: us-west-1
-    
+    - uses: actions/checkout@v2
     - name: Setup .NET
-      uses: actions/setup-dotnet@v2
+      uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 5.0.x
+    - name: AWS CLI
+      run: dotnet tool install -g Amazon.Lambda.Tools
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore Services.sln
     - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet build --no-restore CCisternasMiPrimeraFuncionLambda.sln
+    - name: Deploy to Lambda
+      working-directory: ./CCisternasMiPrimeraFuncionLambda/ApiServices
+      run: dotnet lambda deploy-serverless
