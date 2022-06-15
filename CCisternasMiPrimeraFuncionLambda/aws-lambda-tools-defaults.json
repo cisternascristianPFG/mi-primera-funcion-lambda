@@ -6,7 +6,7 @@
         "dotnet lambda help",
         "All the command line options for the Lambda command can be specified in this file."
     ],
-    "profile"     : "512568694414_AdministratorAccess",
+    "profile"     : "704487722273_AdministratorAccess",
     "region"      : "us-west-1",
     "configuration" : "Release",
     "s3-prefix"     : "CCisternasMiPrimeraFuncionLambda/",
