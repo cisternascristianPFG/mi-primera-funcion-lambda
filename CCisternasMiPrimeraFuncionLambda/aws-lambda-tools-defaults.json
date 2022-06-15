@@ -12,6 +12,6 @@
     "s3-prefix"     : "CCisternasMiPrimeraFuncionLambda/",
     "template"      : "serverless.template",
     "template-parameters" : "",
-    "s3-bucket"           : "ccisternas-mi-primera-funcion-lambda",
-    "stack-name"          : "ccisternas-mi-primera-funcion-lambda"
+    "s3-bucket"           : "ccisternas-mi-primera-funcion-lambda-2",
+    "stack-name"          : "ccisternas-mi-primera-funcion-lambda-2"
 }
