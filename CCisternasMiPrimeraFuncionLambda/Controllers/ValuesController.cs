@@ -12,7 +12,7 @@ public class ValuesController : ControllerBase
     [Route("[action]")]
     public string HolaMundo()
     {
-        return "Mi primera funcion lambda - Cristian Cisternas";
+        return "Mi primera funcion lambda - Cristian Cisternas desde el pipeline";
     }
 
     // GET api/values
